@@ -49,6 +49,7 @@ export default async function Home() {
         className="transition-all delay-150">login</TabsTrigger>
       </TabsList>
       <TabsContent value="create-account">
+        <createAccountForm />
       </TabsContent>
       <TabsContent value="login"></TabsContent>
     </Tabs>
