@@ -3,23 +3,15 @@ import { RedirectType } from "next/dist/client/components/redirect"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+
+
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import { CreateAccountForm } from "@/components/ui/auth/create-acount-form"
 
 export default async function Home() {
   let loggdIn = false
@@ -49,7 +41,7 @@ export default async function Home() {
         className="transition-all delay-150">login</TabsTrigger>
       </TabsList>
       <TabsContent value="create-account">
-        <createAccountForm />
+        <CreateAccountForm/>
       </TabsContent>
       <TabsContent value="login"></TabsContent>
     </Tabs>
