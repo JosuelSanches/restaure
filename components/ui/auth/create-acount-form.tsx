@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../form";
 
 const formSchema = z.object({
     email: z.string({
@@ -43,7 +43,44 @@ export function CreateAccountForm(){
                 <form onSubmit= 
                     {form.handleSubmit(onSubmit)}
                     className="flex flex-col space-y-2">
-                    
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render= {({field})=>(
+                            <FormItem>
+                                <FormLabel>E-mail</FormLabel>
+                                <FormControl>
+                                    <Input 
+                                        placeholder="E-mail"
+                                        {...field}/>
+                                </FormControl>
+                                <FormDescription>
+                                    This is your E-mail
+                                </FormDescription>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
+                    />
+
+                        <FormField
+                        control={form.control}
+                        name="password"
+                        render= {({field})=>(
+                            <FormItem>
+                                <FormLabel>Password</FormLabel>
+                                <FormControl>
+                                    <Input 
+                                        placeholder="Password"
+                                        {...field}/>
+                                </FormControl>
+                                <FormDescription>
+                                    This is your Password
+                                </FormDescription>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
+                    />
+                    <Button type="submit">Create Account</Button>
                 </form>
 
             </Form>
