@@ -23,13 +23,30 @@ password: z.string({
 
 export function CreateAccountForm(){
     const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
         defaultValues: {
             email: "",
             password: "",
-        }
+        },
     })
 
+    const onSubmit = async (values: z.infer<typeof
+         formSchema>) => {
+            console.log(values);
+         };
+
     return(
-        <h1>Create AccountForm</h1>
+        <div className="flex flex-col justify-center
+        items-center space-y-2">
+            <span className="text-lg">You will love it.</span>
+            <Form {...form}>
+                <form onSubmit= 
+                    {form.handleSubmit(onSubmit)}
+                    className="flex flex-col space-y-2">
+                    
+                </form>
+
+            </Form>
+        </div>
     )
 }
