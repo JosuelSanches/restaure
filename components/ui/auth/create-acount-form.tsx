@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../form";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     email: z.string({
@@ -22,6 +24,7 @@ password: z.string({
 })
 
 export function CreateAccountForm(){
+    const router = useRouter()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -32,7 +35,32 @@ export function CreateAccountForm(){
 
     const onSubmit = async (values: z.infer<typeof
          formSchema>) => {
-            console.log(values);
+           // console.log(values);
+           
+
+           try{
+            const supabase = createClientComponentClient()
+           const { email, password } = values;
+
+            const { error,
+            data: { user }
+        } = await supabase.auth.signUp({
+                email,
+                password,
+                options:{
+                    emailRedirectTo: `${location.origin}/auth/callback`
+                }
+            })
+
+            
+
+            if(user)
+                form.reset()
+                router.push("/")
+
+           }catch(error){
+            console.log("CreateAccountForm", error)
+           }
          };
 
     return(
