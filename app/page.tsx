@@ -27,7 +27,7 @@ export default async function Home() {
   }catch(error){
     console.log("Home", error)
   }finally{
-    if(loggdIn) redirect("/use-app", RedirectType.replace)
+    if(loggdIn) redirect("/user-app", RedirectType.replace)
   }
   return (
     <div className="flex flex-col h-screen w-full justify-center items-center">
