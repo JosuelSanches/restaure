@@ -22,8 +22,8 @@ export default async function UserApp(){
 
 
     return(
-        <div>
-            Logado
+        <div className="flex justify-center max-h-screen pt-20 bg-green-300">
+            User Logged in
         </div>
     )
 }
