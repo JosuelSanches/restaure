@@ -23,7 +23,7 @@ export default async function UserApp(){
 
 
     return(
-        <h1 className="flex justify-center max-h-screen pt-20 bg-green-300">
+        <h1 className="flex pr-10 justify-end max-h-screen pt-20 bg-green-300">
            <UserNav/>
         </h1>
     )
