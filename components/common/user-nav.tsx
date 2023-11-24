@@ -51,9 +51,7 @@ import Link from "next/link"
 
     return (
       <>
-    {!user && <Link href={"/"}>Login</Link>}
-    {
-        user && (
+        {user && (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
