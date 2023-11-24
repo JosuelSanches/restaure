@@ -1,4 +1,4 @@
-"user client"
+"use client"
 import { User, createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 import { useState, useEffect } from "react"
@@ -22,7 +22,6 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import { setDefaultResultOrder } from "dns"
-import { error } from "console"
 import Link from "next/link"
   
   export function UserNav() {
@@ -32,7 +31,7 @@ import Link from "next/link"
     const router = useRouter()
 
     const getUser = async () => {
-        const {} = await supabase.auth.getUser()
+        const { data: { user }, error,} = await supabase.auth.getUser()
 
         if(error) {
             console.log("UserNav: ", error)
@@ -59,8 +58,8 @@ import Link from "next/link"
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-                  <AvatarFallback>SC</AvatarFallback>
+                  <AvatarImage src="/avatars/guy101.jpg" alt="restaure" />
+                  <AvatarFallback>RS</AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
@@ -69,7 +68,7 @@ import Link from "next/link"
                 <div className="flex flex-col space-y-1">
                   <p className="text-sm font-medium leading-none">shadcn</p>
                   <p className="text-xs leading-none text-muted-foreground">
-                    m@example.com
+                    {user.email?.split("@")[0]}
                   </p>
                 </div>
               </DropdownMenuLabel>

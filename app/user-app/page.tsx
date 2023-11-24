@@ -1,3 +1,4 @@
+import { UserNav } from "@/components/common/user-nav"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { RedirectType } from "next/dist/client/components/redirect"
 import { cookies } from "next/headers"
@@ -22,8 +23,8 @@ export default async function UserApp(){
 
 
     return(
-        <div className="flex justify-center max-h-screen pt-20 bg-green-300">
-            User Logged in
-        </div>
+        <h1 className="flex justify-center max-h-screen pt-20 bg-green-300">
+           <UserNav/>
+        </h1>
     )
 }
