@@ -16,6 +16,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import { ImageUploadPlaceHolder } from "@/components/user-app/img-upload-placeholder"
 
 
 
@@ -71,16 +72,16 @@ export default async function UserApp(){
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <h2 className="text-2xl font-semibold tracking-tight">
-                            Listen Now
+                            Photo collection
                           </h2>
                           <p className="text-sm text-muted-foreground">
-                            Top picks for you. Updated daily.
+                            The photos you already enhanced
                           </p>
                         </div>
                       </div>
                      <Separator className="my-4" />
                       <div className="relative">
-                        LISTA
+                        <ImageUploadPlaceHolder />
                         {/*<ScrollArea>
                           <div className="flex space-x-4 pb-4">
                             {listenNowAlbums.map((album) => (
