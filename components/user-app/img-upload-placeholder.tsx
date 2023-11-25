@@ -10,10 +10,43 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Blob } from "buffer"
+import { useCallback, useState } from "react"
+
+import { useDropzone } from "react-dropzone"
+
+interface FilePreview{
+    file: Blob;
+    preview: string;
+}
 
 export function ImageUploadPlaceHolder() {
+
+    const [file, setFile] = useState<FilePreview | null>()
+    const [fileToProcess, setFileToProcess] = useState<{
+        path: string;
+    }| null>()
+    const [restoredFile, setRestoredFile] = useState<FilePreview | null>
+    ();
+
+
+    const onDrop = useCallback(async (acceptFiles: File[]) => {
+        try {
+            const file = acceptFiles[0]
+        } catch(error){
+            console.log("onDrop", error)
+        }
+    }, []);
+    
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
+        maxFiles: 1,
+        accept:{
+            "image/png": [".png"],
+            "image/jpeg": [".jpg"],
+        }
+    })
+
     //It just get a boolean if the dialog is opening or closing
     const handleDialogOpenChange = async (e:boolean) =>{
         console.log(e)
@@ -57,11 +90,26 @@ export function ImageUploadPlaceHolder() {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                {/*Component upload */}
+                {
+                    !file && (
+                        <div {...getRootProps()}>
+                            <input {...getInputProps()}/>
+                            {
+                                isDragActive?(
+                                    <p className="flex items-center jestify-center
+                                    bg-blue-100 opacity-70 border border-dashed
+                                    border-blue-300 p-6 h-36 rounded-md">Drop your photo here...</p>
+                                ):(
+                                    <p className="flex items-center jestify-center
+                                    bg-blue-100 opacity-70 border border-dashed
+                                    border-blue-300 p-6 h-36 rounded-md">Drag or Click to choose image...</p>
+                                )}
+                        </div>
+                    )}
               </div>
             </div>
             <DialogFooter>
-              <Button>Import Podcast</Button>
+              <Button>Enhence</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
