@@ -6,6 +6,18 @@ import { RedirectType } from "next/dist/client/components/redirect"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
+import { PlusCircleIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
+
+
 
 export default async function UserApp(){
     let loggdIn = false
@@ -34,26 +46,26 @@ export default async function UserApp(){
                 <Sidebar className="hidden lg:block"/>
               <div className="col-span-3 lg:col-span-4 lg:border-l">
                 <div className="h-full px-4 py-6 lg:px-8">
-                  {/* <Tabs defaultValue="music" className="h-full space-y-6">
+                  <Tabs defaultValue="music" className="h-full space-y-6">
                     <div className="space-between flex items-center">
                       <TabsList>
-                        <TabsTrigger value="music" className="relative">
-                          Music
+                        <TabsTrigger value="photos" className="relative">
+                          Photos
                         </TabsTrigger>
-                        <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
-                        <TabsTrigger value="live" disabled>
-                          Live
+                        <TabsTrigger value="documents">Documents</TabsTrigger>
+                        <TabsTrigger value="other" disabled>
+                          Other
                         </TabsTrigger>
                       </TabsList>
                       <div className="ml-auto mr-4">
                         <Button>
-                          <PlusCircledIcon className="mr-2 h-4 w-4" />
-                          Add music
+                          <PlusCircleIcon className="mr-2 h-4 w-4" />
+                          Add collection
                         </Button>
                       </div>
                     </div>
                     <TabsContent
-                      value="music"
+                      value="photos"
                       className="border-none p-0 outline-none"
                     >
                       <div className="flex items-center justify-between">
@@ -66,9 +78,10 @@ export default async function UserApp(){
                           </p>
                         </div>
                       </div>
-                      <Separator className="my-4" />
+                     <Separator className="my-4" />
                       <div className="relative">
-                        <ScrollArea>
+                        LISTA
+                        {/*<ScrollArea>
                           <div className="flex space-x-4 pb-4">
                             {listenNowAlbums.map((album) => (
                               <AlbumArtwork
@@ -82,7 +95,7 @@ export default async function UserApp(){
                             ))}
                           </div>
                           <ScrollBar orientation="horizontal" />
-                        </ScrollArea>
+                            </ScrollArea>*/}
                       </div>
                       <div className="mt-6 space-y-1">
                         <h2 className="text-2xl font-semibold tracking-tight">
@@ -94,7 +107,8 @@ export default async function UserApp(){
                       </div>
                       <Separator className="my-4" />
                       <div className="relative">
-                        <ScrollArea>
+                        LISTA 2
+                       {/* <ScrollArea>
                           <div className="flex space-x-4 pb-4">
                             {madeForYouAlbums.map((album) => (
                               <AlbumArtwork
@@ -108,11 +122,11 @@ export default async function UserApp(){
                             ))}
                           </div>
                           <ScrollBar orientation="horizontal" />
-                        </ScrollArea>
+                            </ScrollArea>*/}
                       </div>
                     </TabsContent>
                     <TabsContent
-                      value="podcasts"
+                      value="documents"
                       className="h-full flex-col border-none p-0 data-[state=active]:flex"
                     >
                       <div className="flex items-center justify-between">
@@ -126,9 +140,9 @@ export default async function UserApp(){
                         </div>
                       </div>
                       <Separator className="my-4" />
-                      <PodcastEmptyPlaceholder />
+                      {/**/}
                     </TabsContent>
-                  </Tabs> */}
+                  </Tabs>
                 </div>
               </div>
             </div>
