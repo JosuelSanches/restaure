@@ -45,6 +45,7 @@ export function ImageUploadPlaceHolder() {
     useEffect(()=> {
       return () => {
         if(file) URL.revokeObjectURL(file.preview)
+        if(restoredFile) URL.revokeObjectURL(restoredFile.preview)
       }
     },[])
     
@@ -128,6 +129,22 @@ export function ImageUploadPlaceHolder() {
                                             className="w-48 h-48
                                             object-contain rounded-md"
                                             onLoad={()=> URL.revokeObjectURL(file.preview)}
+                                          />
+                                        </div>
+                                      </div>
+                                    )
+                                  }
+                                  {
+                                    restoredFile && (
+                                      <div className="flex flex-row
+                                      flex-wrap drop-shadow-md">
+                                        <div className="flex w-60 h-60
+                                        relative">
+                                          <img
+                                            src={restoredFile.preview}
+                                            className="w-60 h-60
+                                            object-contain rounded-md"
+                                            onLoad={()=> URL.revokeObjectURL(restoredFile.preview)}
                                           />
                                         </div>
                                       </div>
