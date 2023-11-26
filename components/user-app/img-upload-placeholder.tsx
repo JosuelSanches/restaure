@@ -10,58 +10,73 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Blob } from "buffer"
 import { useCallback, useEffect, useState } from "react"
 
 import { useDropzone } from "react-dropzone"
 
-interface FilePreview{
-    file: Blob;
-    preview: string;
+interface FilePreview {
+  file: Blob;
+  preview: string;
 }
 
 export function ImageUploadPlaceHolder() {
 
-    const [file, setFile] = useState<FilePreview | null>()
-    const [fileToProcess, setFileToProcess] = useState<{
-        path: string;
-    }| null>()
-    const [restoredFile, setRestoredFile] = useState<FilePreview | null>
+  const [file, setFile] = useState<FilePreview | null>()
+  const [fileToProcess, setFileToProcess] = useState<{
+    path: string;
+  } | null>(null)
+  const [restoredFile, setRestoredFile] = useState<FilePreview | null>
     ();
 
 
-    const onDrop = useCallback(async (acceptFiles: File[]) => {
-        try {
-            const file = acceptFiles[0];
-            setFile({
-              file,
-              preview: URL.createObjectURL(file),
-            })
-        } catch(error){
-            console.log("onDrop", error)
-        }
-    }, []);
+  const onDrop = useCallback(async (acceptFiles: File[]) => {
+    try {
+      // capture file
+      const file = acceptFiles[0];
+      // set preview
+      setFile({
+        file,
+        preview: URL.createObjectURL(file),
+      })
 
-    useEffect(()=> {
-      return () => {
-        if(file) URL.revokeObjectURL(file.preview)
-        if(restoredFile) URL.revokeObjectURL(restoredFile.preview)
+      const supabase = createClientComponentClient()
+      const { data, error } = await supabase.storage.from(process.env.
+        NEXT_PUBLIC_SUPABASE_APP_BUCKET_IMAGE_FOLDER)
+        .upload(`${process.env.NEXT_PUBLIC_SUPABASE_APP_BUCKET_IMAGE_FOLDER_PROCESSING}/
+        ${acceptFiles[0].name}`,
+          acceptFiles[0]
+          );
+      if (!error) {
+        setFileToProcess(data)
       }
-    },[])
-    
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({
-        onDrop,
-        maxFiles: 1,
-        accept:{
-            "image/png": [".png"],
-            "image/jpeg": [".jpg"],
-        }
-    })
 
-    //It just get a boolean if the dialog is opening or closing
-    const handleDialogOpenChange = async (e:boolean) =>{
-        console.log(e)
+    } catch (error) {
+      console.log("onDrop", error)
     }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (file) URL.revokeObjectURL(file.preview)
+      if (restoredFile) URL.revokeObjectURL(restoredFile.preview)
+    }
+  }, [])
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    maxFiles: 1,
+    accept: {
+      "image/png": [".png"],
+      "image/jpeg": [".jpg"],
+    }
+  })
+
+  //It just get a boolean if the dialog is opening or closing
+  const handleDialogOpenChange = async (e: boolean) => {
+    console.log(e)
+  }
 
 
   return (
@@ -102,55 +117,55 @@ export function ImageUploadPlaceHolder() {
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
                 {
-                    !file && (
-                        <div {...getRootProps()}>
-                            <input {...getInputProps()}/>
-                            {
-                                isDragActive?(
-                                    <p className="flex items-center jestify-center
+                  !file && (
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      {
+                        isDragActive ? (
+                          <p className="flex items-center jestify-center
                                     bg-blue-100 opacity-70 border border-dashed
                                     border-blue-300 p-6 h-36 rounded-md">Drop your photo here...</p>
-                                ):(
-                                    <p className="flex items-center jestify-center
+                        ) : (
+                          <p className="flex items-center jestify-center
                                     bg-blue-100 opacity-70 border border-dashed
                                     border-blue-300 p-6 h-36 rounded-md">Drag or Click to choose image...</p>
-                                )}
-                        </div>
-                    )}
-                    <div className=" flex flex-col items-center justify-evenly sm:flex-row gap-2">
-                                  {
-                                    file && (
-                                      <div className="flex flex-row
-                                      flex-wrap drop-shadow-md">
-                                        <div className="flex w-48 h-48
-                                        relative">
-                                          <img
-                                            src={file.preview}
-                                            className="w-48 h-48
-                                            object-contain rounded-md"
-                                            onLoad={()=> URL.revokeObjectURL(file.preview)}
-                                          />
-                                        </div>
-                                      </div>
-                                    )
-                                  }
-                                  {
-                                    restoredFile && (
-                                      <div className="flex flex-row
-                                      flex-wrap drop-shadow-md">
-                                        <div className="flex w-60 h-60
-                                        relative">
-                                          <img
-                                            src={restoredFile.preview}
-                                            className="w-60 h-60
-                                            object-contain rounded-md"
-                                            onLoad={()=> URL.revokeObjectURL(restoredFile.preview)}
-                                          />
-                                        </div>
-                                      </div>
-                                    )
-                                  }
+                        )}
                     </div>
+                  )}
+                <div className=" flex flex-col items-center justify-evenly sm:flex-row gap-2">
+                  {
+                    file && (
+                      <div className="flex flex-row
+                                      flex-wrap drop-shadow-md">
+                        <div className="flex w-48 h-48
+                                        relative">
+                          <img
+                            src={file.preview}
+                            className="w-48 h-48
+                                            object-contain rounded-md"
+                            onLoad={() => URL.revokeObjectURL(file.preview)}
+                          />
+                        </div>
+                      </div>
+                    )
+                  }
+                  {
+                    restoredFile && (
+                      <div className="flex flex-row
+                                      flex-wrap drop-shadow-md">
+                        <div className="flex w-60 h-60
+                                        relative">
+                          <img
+                            src={restoredFile.preview}
+                            className="w-60 h-60
+                                            object-contain rounded-md"
+                            onLoad={() => URL.revokeObjectURL(restoredFile.preview)}
+                          />
+                        </div>
+                      </div>
+                    )
+                  }
+                </div>
               </div>
             </div>
             <DialogFooter>
