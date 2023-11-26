@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Blob } from "buffer"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import { useDropzone } from "react-dropzone"
 
@@ -32,11 +32,21 @@ export function ImageUploadPlaceHolder() {
 
     const onDrop = useCallback(async (acceptFiles: File[]) => {
         try {
-            const file = acceptFiles[0]
+            const file = acceptFiles[0];
+            setFile({
+              file,
+              preview: URL.createObjectURL(file),
+            })
         } catch(error){
             console.log("onDrop", error)
         }
     }, []);
+
+    useEffect(()=> {
+      return () => {
+        if(file) URL.revokeObjectURL(file.preview)
+      }
+    },[])
     
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
@@ -106,6 +116,24 @@ export function ImageUploadPlaceHolder() {
                                 )}
                         </div>
                     )}
+                    <div className=" flex flex-col items-center justify-evenly sm:flex-row gap-2">
+                                  {
+                                    file && (
+                                      <div className="flex flex-row
+                                      flex-wrap drop-shadow-md">
+                                        <div className="flex w-48 h-48
+                                        relative">
+                                          <img
+                                            src={file.preview}
+                                            className="w-48 h-48
+                                            object-contain rounded-md"
+                                            onLoad={()=> URL.revokeObjectURL(file.preview)}
+                                          />
+                                        </div>
+                                      </div>
+                                    )
+                                  }
+                    </div>
               </div>
             </div>
             <DialogFooter>
