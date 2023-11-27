@@ -86,6 +86,16 @@ export function ImageUploadPlaceHolder() {
         NEXT_PUBLIC_SUPABASE_APP_BUCKET_IMAGE_FOLDER).getPublicUrl(`
         ${fileToProcess?.path}`)
 
+        const res = await fetch("/api/ai/replicate",{
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            imageUrl: publicUrl,
+          })
+        })
+
         console.log("PublicUrl: ", publicUrl)
 
     }catch(error){
