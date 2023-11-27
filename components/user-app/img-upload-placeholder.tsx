@@ -23,6 +23,8 @@ interface FilePreview {
 
 export function ImageUploadPlaceHolder() {
 
+  const [isMounted, setIsMounted] = useState(false)
+
   const [file, setFile] = useState<FilePreview | null>()
   const [fileToProcess, setFileToProcess] = useState<{
     path: string;
@@ -59,6 +61,7 @@ export function ImageUploadPlaceHolder() {
   }, []);
 
   useEffect(() => {
+    setIsMounted(true)
     return () => {
       if (file) URL.revokeObjectURL(file.preview)
       if (restoredFile) URL.revokeObjectURL(restoredFile.preview)
@@ -102,6 +105,8 @@ export function ImageUploadPlaceHolder() {
       console.log("handleEnhance: ", error)
     }
   }
+
+  if(!isMounted) return null
 
 
   return (
