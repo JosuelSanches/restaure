@@ -50,6 +50,7 @@ export function ImageUploadPlaceHolder() {
           );
       if (!error) {
         setFileToProcess(data)
+        
       }
 
     } catch (error) {
@@ -76,6 +77,20 @@ export function ImageUploadPlaceHolder() {
   //It just get a boolean if the dialog is opening or closing
   const handleDialogOpenChange = async (e: boolean) => {
     console.log(e)
+  }
+
+  const handleEnhance = async() => {
+    try{
+      const supabase = createClientComponentClient()
+      const {data: {publicUrl}} = await supabase.storage.from(process.env.
+        NEXT_PUBLIC_SUPABASE_APP_BUCKET_IMAGE_FOLDER).getPublicUrl(`
+        ${fileToProcess?.path}`)
+
+        console.log("PublicUrl: ", publicUrl)
+
+    }catch(error){
+      console.log("handleEnhance: ", error)
+    }
   }
 
 
@@ -169,7 +184,7 @@ export function ImageUploadPlaceHolder() {
               </div>
             </div>
             <DialogFooter>
-              <Button>Enhence</Button>
+              <Button onClick={handleEnhance}>Enhence</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
