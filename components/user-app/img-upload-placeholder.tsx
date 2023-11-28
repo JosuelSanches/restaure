@@ -129,6 +129,7 @@ export function ImageUploadPlaceHolder() {
 
         <h3 className="mt-4 text-lg font-semibold">Just add a Photo</h3>
         <p className="mb-4 mt-2 text-sm text-muted-foreground">
+          A foto que você adicionar será melhorada por inteligencia artificial
           The photo you add will be enhanced by AI
         </p>
         <Dialog onOpenChange={handleDialogOpenChange}>
@@ -139,8 +140,9 @@ export function ImageUploadPlaceHolder() {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Add Photo</DialogTitle>
+              <DialogTitle>Adicionar Foto Add Photo</DialogTitle>
               <DialogDescription>
+                Arraste uma foto para adcionar e click em melhorar 
                 Drag a photo in order to upload & Enhance
               </DialogDescription>
             </DialogHeader>
