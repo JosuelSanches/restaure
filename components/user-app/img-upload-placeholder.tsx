@@ -99,6 +99,17 @@ export function ImageUploadPlaceHolder() {
           })
         })
 
+        const restoredImageUrl = await res.json()
+
+        const readImageRes = await fetch(restoredImageUrl.data)
+
+        const imageBlob = await readImageRes.blob()
+
+        setRestoredFile({
+          file: imageBlob,
+          preview: URL.createObjectURL(imageBlob),
+        })
+
         console.log("PublicUrl: ", publicUrl)
 
     }catch(error){
